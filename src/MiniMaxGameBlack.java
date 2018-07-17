@@ -7,7 +7,9 @@ public class MiniMaxGameBlack {
 		List<char[]> possibleMoves;
 
 		if (depth==0) {
-			MidEndGameFunctions.leafLevelBlack(board, result);
+			possibleMoves = MidEndGameFunctions.generateMovesMidEndGame(board);
+			result.estimate = MidEndGameFunctions.staticEstimateBlack(board,possibleMoves.size());
+			result.count++;
 			return result;
 		}
 
@@ -52,7 +54,7 @@ public class MiniMaxGameBlack {
 
 		System.out.println("Board Position:"+ new String(res.board));
 		System.out.println("Position evaluated by static estimation:"+res.count);
-		System.out.println("MINMAX game black estimate:"+res.estimate);
+		System.out.println("MINMAX Game black estimate:"+res.estimate);
 
 		FileUtil.writeToFile(args[1],res.board);
 	}

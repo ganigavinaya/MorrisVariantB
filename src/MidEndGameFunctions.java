@@ -53,20 +53,6 @@ public class MidEndGameFunctions {
 		return (white==3)?generateHopping(board):generateMove(board);
 	}
 
-	public static void leafLevel(char[] board, MorrisGameBoard result) {
-		List<char[]> possibleMoves;
-		possibleMoves = generateBlackMoves(board);
-		result.estimate = staticEstimate(board,possibleMoves.size());
-		result.count++;
-	}
-
-	public static void leafLevelBlack(char[] board, MorrisGameBoard result) {
-		List<char[]> possibleMoves;
-		possibleMoves = generateMovesMidEndGame(board);
-		result.estimate = staticEstimateBlack(board,possibleMoves.size());
-		result.count++;
-	}
-
 	public static int staticEstimate(char[] board, int numBlackMoves){
 		int[] pieceCount = Utility.countWBPieces(board);
 		if(pieceCount[Utility.BLACK]<=2)

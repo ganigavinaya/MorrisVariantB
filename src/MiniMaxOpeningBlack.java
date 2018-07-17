@@ -2,7 +2,7 @@ import java.util.List;
 
 public class MiniMaxOpeningBlack {
 
-	public MorrisGameBoard maxMin(int depth, char[] board, boolean flag) {
+	public MorrisGameBoard maxMinOpeningBlack(int depth, char[] board, boolean flag) {
 
 		MorrisGameBoard result = new MorrisGameBoard();
 		List<char[]> possibleMoves;
@@ -24,7 +24,7 @@ public class MiniMaxOpeningBlack {
 
 		for(char[] pos:possibleMoves){
 			if(flag) {
-				MorrisGameBoard mgIn = maxMin(depth - 1, pos, false);
+				MorrisGameBoard mgIn = maxMinOpeningBlack(depth - 1, pos, false);
 				if (mgIn.estimate > result.estimate) {
 					result.estimate = mgIn.estimate;
 					result.board = pos;
@@ -32,7 +32,7 @@ public class MiniMaxOpeningBlack {
 				result.count += mgIn.count;
 			}
 			else{
-				MorrisGameBoard mgIn = maxMin(depth - 1, pos, true);
+				MorrisGameBoard mgIn = maxMinOpeningBlack(depth - 1, pos, true);
 				if (mgIn.estimate < result.estimate) {
 					result.estimate = mgIn.estimate;
 					result.board = pos;
@@ -51,7 +51,7 @@ public class MiniMaxOpeningBlack {
 		char[] board = FileUtil.readInput(args[0]);
 
 		MiniMaxOpeningBlack mob = new MiniMaxOpeningBlack();
-		MorrisGameBoard res = mob.maxMin(depth,board,true);
+		MorrisGameBoard res = mob.maxMinOpeningBlack(depth,board,true);
 
 		System.out.println("Board Position:"+ new String(res.board));
 		System.out.println("Position evaluated by static estimation:"+res.count);

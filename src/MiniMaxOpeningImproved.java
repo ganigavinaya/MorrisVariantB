@@ -1,14 +1,13 @@
 import java.util.List;
 
-public class MiniMaxOpening {
+public class MiniMaxOpeningImproved {
 
-	public MorrisGameBoard maxMinOpening(int depth, char[] board, boolean flag) {
-
+	public  MorrisGameBoard maxMinImproved(int depth, char[] board, boolean flag) {
 		MorrisGameBoard result = new MorrisGameBoard();
 		List<char[]> possibleMoves;
 
 		if(depth==0){
-			int staticEstimate = OpeningFunctions.staticEstimation(board);
+			int staticEstimate = OpeningFunctions.staticEstimation(board)+Utility.countPossibleMills(board);
 			return new MorrisGameBoard(staticEstimate,result.count+1,board);
 		}
 
@@ -24,7 +23,7 @@ public class MiniMaxOpening {
 
 		for(char[] pos:possibleMoves){
 			if(flag) {
-				MorrisGameBoard mgIn = maxMinOpening(depth - 1, pos, false);
+				MorrisGameBoard mgIn = maxMinImproved(depth - 1, pos, false);
 				if (mgIn.estimate > result.estimate) {
 					result.estimate = mgIn.estimate;
 					result.board = pos;
@@ -32,7 +31,7 @@ public class MiniMaxOpening {
 				result.count += mgIn.count;
 			}
 			else{
-				MorrisGameBoard mgIn = maxMinOpening(depth - 1, pos, true);
+				MorrisGameBoard mgIn = maxMinImproved(depth - 1, pos, true);
 				if (mgIn.estimate < result.estimate) {
 					result.estimate = mgIn.estimate;
 					result.board = pos;
@@ -44,21 +43,21 @@ public class MiniMaxOpening {
 		return result;
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		int depth = Integer.parseInt(args[2]);
 
 		//reads input board position
 		char[] board = FileUtil.readInput(args[0]);
 
-		MiniMaxOpening mo = new MiniMaxOpening();
-		MorrisGameBoard res = mo.maxMinOpening(depth,board,true);
+		MiniMaxOpeningImproved moi = new MiniMaxOpeningImproved();
+		MorrisGameBoard res = moi.maxMinImproved(depth,board,true);
 
 		System.out.println("Board Position:"+ new String(res.board));
 		System.out.println("Position evaluated by static estimation:"+res.count);
-		System.out.println("MINMAX estimate:"+res.estimate);
+		System.out.println("MINMAX Improved estimate:"+res.estimate);
 
 		FileUtil.writeToFile(args[1],res.board);
-
 	}
+
 
 }

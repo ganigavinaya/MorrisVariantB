@@ -212,4 +212,20 @@ public class Utility {
 		}
 		return neighborList;
 	}
+
+	public static int countPossibleMills(char[] board){
+		int mills = 0;
+
+		for(int i=0;i<board.length;i++){
+			if(board[i]=='x'){
+				board[i]='W';
+				if(closeMill(i,board)){
+					mills++;
+				}
+				board[i]='x';
+			}
+		}
+		return mills;
+	}
+
 }
