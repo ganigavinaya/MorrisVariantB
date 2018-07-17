@@ -8,7 +8,9 @@ public class ABGame {
 		List<char[]> possibleMoves;
 
 		if (depth==0) {
-			MidEndGameFunctions.leafLevel(board, result);
+			possibleMoves = MidEndGameFunctions.generateBlackMoves(board);
+			result.estimate = MidEndGameFunctions.staticEstimate(board,possibleMoves.size());
+			result.count+=1;
 			return result;
 		}
 
